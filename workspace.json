@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "jewishhistory.info": "apps/jewishhistory.info",
+    "jewishhistory.info-e2e": "apps/jewishhistory.info-e2e"
+  }
+}

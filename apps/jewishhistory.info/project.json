@@ -1,0 +1,54 @@
+{
+  "root": "apps/jewishhistory.info",
+  "sourceRoot": "apps/jewishhistory.info",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/jewishhistory.info",
+        "outputPath": "dist/apps/jewishhistory.info"
+      },
+      "configurations": {
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "options": {
+        "buildTarget": "jewishhistory.info:build",
+        "dev": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "jewishhistory.info:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "jewishhistory.info:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/jewishhistory.info"],
+      "options": {
+        "jestConfig": "apps/jewishhistory.info/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/jewishhistory.info/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}
