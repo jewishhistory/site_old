@@ -48,6 +48,12 @@
       "options": {
         "lintFilePatterns": ["apps/jewishhistory.info/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "content": {
+      "executor": "./tools/executors/content:content",
+      "options": {
+        "repository": "https://github.com/jewishhistory/content.git"
+      }
     }
   },
   "tags": []
