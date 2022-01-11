@@ -9,7 +9,7 @@
   },
   "private": true,
   "dependencies": {
-    "@nrwl/next": "13.4.3",
+    "@nrwl/next": "13.4.4",
     "core-js": "^3.6.5",
     "next": "12.0.7",
     "react": "17.0.2",
@@ -18,15 +18,15 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@nrwl/cli": "13.4.3",
-    "@nrwl/cypress": "13.4.3",
-    "@nrwl/eslint-plugin-nx": "13.4.3",
-    "@nrwl/jest": "13.4.3",
-    "@nrwl/linter": "13.4.3",
-    "@nrwl/react": "13.4.3",
-    "@nrwl/tao": "13.4.3",
-    "@nrwl/web": "13.4.3",
-    "@nrwl/workspace": "13.4.3",
+    "@nrwl/cli": "13.4.4",
+    "@nrwl/cypress": "13.4.4",
+    "@nrwl/eslint-plugin-nx": "13.4.4",
+    "@nrwl/jest": "13.4.4",
+    "@nrwl/linter": "13.4.4",
+    "@nrwl/react": "13.4.4",
+    "@nrwl/tao": "13.4.4",
+    "@nrwl/web": "13.4.4",
+    "@nrwl/workspace": "13.4.4",
     "@testing-library/react": "12.1.2",
     "@testing-library/react-hooks": "7.0.2",
     "@types/jest": "27.0.2",
@@ -53,3 +53,4 @@
     "typescript": "~4.4.3"
   }
 }
+
