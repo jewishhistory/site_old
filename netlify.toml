@@ -1,0 +1,4 @@
+[build]
+  base = "."
+  publish = "dist/apps/jewishhistory.info/exported"
+  command = "npm run build"
