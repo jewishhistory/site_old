@@ -39,6 +39,14 @@ export default async function contentExecutor(options: IContentExecutorOptions, 
 
   log.success('Downloading content', 'success');
 
+  const index = {
+    era: [],
+    person: [],
+    event: [],
+  };
+  const indexFile = path.join(contentDir, 'index.json');
+  fs.writeFileSync(indexFile, JSON.stringify(index, null, 2));
+
   const files = fs.readdirSync(contentDir)
     .filter((f) => f.match(/.md$/));
 
@@ -47,6 +55,9 @@ export default async function contentExecutor(options: IContentExecutorOptions, 
     const entity = parse(content);
 
     const filename = path.join(contentDir, `${entity.code}.json`);
+    const currentIndex = JSON.parse(fs.readFileSync(indexFile, { encoding: 'utf8' }));
+    currentIndex[entity.type].push(filename);
+    fs.writeFileSync(indexFile, JSON.stringify(currentIndex, null, 2));
 
     (entity as any).path = path.join(contentDir, file);
 
