@@ -1,11 +1,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as YAML from 'yaml';
+import * as util from 'util';
+import * as child_process from 'child_process';
 import { ExecutorContext } from '@nrwl/devkit';
 import { download, extract } from 'gitly';
 import { merge } from 'lodash';
 import { bold, bgGreenBright, bgRedBright, greenBright, redBright, black } from 'colorette';
 import { parse } from './parser/parse';
+
+const exec = util.promisify(child_process.exec);
 
 const log = {
   success: (title: string, message: string) =>
@@ -19,6 +22,14 @@ export interface IContentExecutorOptions {
 }
 
 export default async function contentExecutor(options: IContentExecutorOptions, context: ExecutorContext) {
+  const { stderr } = await exec('rm -rf ./content');
+
+  if (stderr) {
+    return { success: false };
+  }
+
+  log.success('Cleaning content directory', 'success');
+
   const source = await download(options.repository);
   const contentDir = await extract(source, './content');
   const isSuccessDownload = Boolean(contentDir);
@@ -37,12 +48,14 @@ export default async function contentExecutor(options: IContentExecutorOptions, 
 
     const filename = path.join(contentDir, `${entity.code}.json`);
 
+    (entity as any).path = path.join(contentDir, file);
+
     if (entity.type === 'era') {
       if (fs.existsSync(filename)) {
-        fs.writeFileSync(filename, JSON.stringify(entity, null, 2));
-      } else {
         const data = JSON.parse(fs.readFileSync(filename, { encoding: 'utf8' }));
         fs.writeFileSync(filename, JSON.stringify(merge({}, data, entity)));
+      } else {
+        fs.writeFileSync(filename, JSON.stringify(entity, null, 2));
       }
     }
 
