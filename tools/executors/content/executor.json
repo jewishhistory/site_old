@@ -1,7 +1,7 @@
 {
   "executors": {
     "content": {
-      "implementation": "./impl",
+      "implementation": "./dist/impl",
       "schema": "./schema.json",
       "description": "Runs `content` (to test executors out)."
     }
