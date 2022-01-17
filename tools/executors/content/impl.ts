@@ -6,7 +6,7 @@ import { ExecutorContext } from '@nrwl/devkit';
 import { download, extract } from 'gitly';
 import { merge } from 'lodash';
 import { bold, bgGreenBright, bgRedBright, greenBright, redBright, black } from 'colorette';
-import { parse } from './parser/parse';
+import { clean, parse } from './parser/parse';
 
 const exec = util.promisify(child_process.exec);
 
@@ -22,7 +22,7 @@ export interface IContentExecutorOptions {
 }
 
 export default async function contentExecutor(options: IContentExecutorOptions, context: ExecutorContext) {
-  const { stderr } = await exec('rm -rf ./content');
+  const { stderr } = await exec('rm -rf ./apps/jewishhistory.info/pages/content');
 
   if (stderr) {
     return { success: false };
@@ -31,7 +31,7 @@ export default async function contentExecutor(options: IContentExecutorOptions, 
   log.success('Cleaning content directory', 'success');
 
   const source = await download(options.repository);
-  const contentDir = await extract(source, './content');
+  const contentDir = await extract(source, './apps/jewishhistory.info/pages/content');
   const isSuccessDownload = Boolean(contentDir);
   if (!isSuccessDownload) {
     return { success: false };
@@ -54,12 +54,12 @@ export default async function contentExecutor(options: IContentExecutorOptions, 
     const content = fs.readFileSync(path.join(contentDir, file), { encoding: 'utf8' });
     const entity = parse(content);
 
+    fs.writeFileSync(path.join(contentDir, file), clean(content));
+
     const filename = path.join(contentDir, `${entity.code}.json`);
     const currentIndex = JSON.parse(fs.readFileSync(indexFile, { encoding: 'utf8' }));
-    currentIndex[entity.type].push(filename);
+    currentIndex[entity.type].push({ code: entity.code, name: entity.name });
     fs.writeFileSync(indexFile, JSON.stringify(currentIndex, null, 2));
-
-    (entity as any).path = path.join(contentDir, file);
 
     if (entity.type === 'era') {
       if (fs.existsSync(filename)) {

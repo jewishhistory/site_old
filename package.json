@@ -1,6 +1,5 @@
 {
   "name": "jewishhistory",
-  "type": "module",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -12,6 +11,8 @@
   },
   "private": true,
   "dependencies": {
+    "@mdx-js/loader": "^1.6.22",
+    "@next/mdx": "^12.0.8",
     "@nrwl/next": "13.4.4",
     "core-js": "^3.6.5",
     "gitly": "^2.1.5",
@@ -20,13 +21,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "regenerator-runtime": "0.13.7",
-    "remark": "^14.0.2",
-    "remark-frontmatter": "^4.0.1",
-    "remark-parse": "^10.0.1",
-    "remark-stringify": "^10.0.2",
-    "to-vfile": "^7.2.3",
     "tslib": "^2.0.0",
-    "unified": "^10.1.1",
     "webpack": "^5.66.0",
     "yaml": "^1.10.2"
   },

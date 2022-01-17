@@ -34,3 +34,7 @@ export function parse(content: string): Entity {
 
   return entity;
 }
+
+export function clean(content: string) {
+  return content.replace(/(---\n[.\S\s]+---)/g, '');
+}

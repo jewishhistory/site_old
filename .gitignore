@@ -4,7 +4,7 @@
 /dist
 /tmp
 /out-tsc
-/content
+/apps/jewishhistory.info/pages/content
 
 # dependencies
 /node_modules
