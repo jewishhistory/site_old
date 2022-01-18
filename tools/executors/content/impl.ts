@@ -7,6 +7,7 @@ import { download, extract } from 'gitly';
 import { merge } from 'lodash';
 import { bold, bgGreenBright, bgRedBright, greenBright, redBright, black } from 'colorette';
 import { clean, parse } from './parser/parse';
+import rimraf from 'rimraf';
 
 const exec = util.promisify(child_process.exec);
 
@@ -22,12 +23,7 @@ export interface IContentExecutorOptions {
 }
 
 export default async function contentExecutor(options: IContentExecutorOptions, context: ExecutorContext) {
-  const { stderr } = await exec('rm -rf ./apps/jewishhistory.info/pages/content');
-
-  if (stderr) {
-    return { success: false };
-  }
-
+  rimraf.sync('./apps/jewishhistory.info/pages/content/*.json');
   log.success('Cleaning content directory', 'success');
 
   const source = await download(options.repository);
@@ -52,7 +48,7 @@ export default async function contentExecutor(options: IContentExecutorOptions, 
 
   for (const file of files) {
     const content = fs.readFileSync(path.join(contentDir, file), { encoding: 'utf8' });
-    const entity = parse(content);
+    const entity = parse(file, content);
 
     fs.writeFileSync(path.join(contentDir, file), clean(content));
 

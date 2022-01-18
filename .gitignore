@@ -4,7 +4,10 @@
 /dist
 /tmp
 /out-tsc
-/apps/jewishhistory.info/pages/content
+/apps/jewishhistory.info/pages/content/**/*.json
+/apps/jewishhistory.info/pages/content/**/*.md
+/apps/jewishhistory.info/pages/content/**/*.mdx
+/apps/jewishhistory.info/pages/content/LICENSE
 
 # dependencies
 /node_modules
