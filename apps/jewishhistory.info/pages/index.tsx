@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Link from 'next/link';
 import * as fs from 'fs';
 
 export const Index: FC<{ timeline: any }> = ({ timeline }) => {
@@ -9,17 +10,17 @@ export const Index: FC<{ timeline: any }> = ({ timeline }) => {
       <ul>
         {Object.keys(timeline).map((era) => (
           <li key={era}>
-            <div><strong><a href={`/content/${era}/`}>{timeline[era].name}</a></strong></div>
+            <div><strong><Link href={`/content/${era}/`}><a>{timeline[era].name}</a></Link></strong></div>
             <div>События:</div>
             <ul>
               {timeline[era].events.map(event => (
-                <li key={event.code}><a href={`/content/${event.code}/`}>{event.name}</a></li>
+                <li key={event.code}><Link href={`/content/${event.code}/`}><a>{event.name}</a></Link></li>
               ))}
             </ul>
             <div>Люди:</div>
             <ul>
               {timeline[era].persons.map(person => (
-                <li key={person.code}><a href={`/content/${person.code}/`}>{person.name}</a></li>
+                <li key={person.code}><Link href={`/content/${person.code}/`}><a>{person.name}</a></Link></li>
               ))}
             </ul>
           </li>
