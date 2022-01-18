@@ -118,14 +118,10 @@ export default async function contentExecutor(options: IContentExecutorOptions, 
   const _index = JSON.parse(fs.readFileSync(indexFile, { encoding: 'utf8' }));
 
   const timelineFile = path.join(contentDir, 'timeline.json');
-  const timeline = _index.era.reduce((acc, item) => ({
+  const timeline = _index.era.reduce((acc, item) => [
     ...acc,
-    [item.code]: {
-      name: item.name,
-      events: [],
-      persons: [],
-    }
-  }), {});
+    { ...item, events: [], persons: []},
+  ], []);
 
   fs.writeFileSync(
     timelineFile,
@@ -135,14 +131,18 @@ export default async function contentExecutor(options: IContentExecutorOptions, 
   for (const item of _index.person) {
     const timeline = JSON.parse(fs.readFileSync(timelineFile, { encoding: 'utf8' }));
     const person = JSON.parse(fs.readFileSync(path.resolve(contentDir, `${item.code}.json`), { encoding: 'utf8' }));
-    timeline[person.era].persons.push({ name: person.name, code: person.code });
+    const era = timeline.find(e => e.code === person.era);
+    era.persons.push({ name: person.name, code: person.code });
     fs.writeFileSync(timelineFile, JSON.stringify(timeline, null, 2));
   }
 
   for (const item of _index.event) {
     const timeline = JSON.parse(fs.readFileSync(timelineFile, { encoding: 'utf8' }));
     const event = JSON.parse(fs.readFileSync(path.resolve(contentDir, `${item.code}.json`), { encoding: 'utf8' }));
-    timeline[event.era].events.push({ name: event.name, code: event.code });
+    const era = timeline.find(e => e.code === event.era);
+    era.events.push({ name: event.name, code: event.code, dateStart: event.date_start });
+    era.events.sort((src, dest) => src.dateStart - dest.dateStart);
+    timeline.sort((src, dest) => (src.events[0] || { dateStart: 0 }).dateStart - (dest.events[0] || { dateStart: 0 }).dateStart);
     fs.writeFileSync(timelineFile, JSON.stringify(timeline, null, 2));
   }
 

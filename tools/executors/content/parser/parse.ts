@@ -25,13 +25,13 @@ type Entity = IPerson | IEra | IEvent;
 
 export function parse(filename: string, content: string): Entity {
   const [matched] = content.match(/---\n([.\S\s]+)---/g);
-  const frontmatter = matched.replace(/-+/g, '');
+  const frontmatter = matched.replace(/-{3}/g, '');
   const entity = YAML.parse(frontmatter);
 
   entity.code = filename.replace('.md', '');
 
   if (entity.type === 'event') {
-    entity.persons = entity.persons ? entity.persons.split(' ') : [];
+    entity.persons = entity.persons || [];
   }
 
   return entity;
