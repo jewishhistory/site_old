@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
-    "build": "nx build && nx export",
+    "start": "npm run content:run && nx serve",
+    "build": "npm run content:run && nx build && nx export",
     "test": "nx test",
     "content:build": "webpack --config ./tools/executors/content/webpack.config.cjs",
     "content:run": "nx content"
