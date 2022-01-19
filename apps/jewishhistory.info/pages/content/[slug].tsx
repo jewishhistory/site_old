@@ -31,8 +31,8 @@ const PostPage: FC<{ content: string, meta: Entity }> = ({ content, meta }) => {
       <hr/>
       <div dangerouslySetInnerHTML={{__html: content}}/>
       <hr/>
-      {meta.type === 'era' || meta.type === 'event' && renderSubEntities(meta.persons, 'Личности')}
-      {meta.type === 'era' && renderSubEntities(meta.events, 'События')}
+      {(meta.type === 'era' || meta.type === 'event') && renderSubEntities(meta.persons, 'Личности')}
+      {(meta.type === 'era' || meta.type === 'person') && renderSubEntities(meta.events, 'События')}
     </>
   );
 }
