@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ExecutorContext } from '@nrwl/devkit';
 import { download, extract } from 'gitly';
-import { clean, parser } from './parser/parser';
+import { clean, parser } from './internal/parser';
 import rimraf from 'rimraf';
 import { log } from './internal/log';
 import { EntitiesIndex } from './internal/EntitiesIndex';

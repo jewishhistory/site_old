@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import fs from 'fs';
-import path from 'path';
-import markdownIt from 'markdown-it';
 import Link from 'next/link';
+import { Entity } from 'types/entities';
+import { getAllDocs, getDocByFileName } from '../../utils/docs';
+import { displayYear } from '../../utils/dates';
 
-const PostPage: FC<{ content: string, meta: any }> = ({ content, meta }) => {
+const PostPage: FC<{ content: string, meta: Entity }> = ({ content, meta }) => {
   const renderSubEntities = (entities, title) => {
     if (Array.isArray(entities) && entities.length) {
       return (
@@ -27,57 +27,46 @@ const PostPage: FC<{ content: string, meta: any }> = ({ content, meta }) => {
   return (
     <>
       <h1>{meta.name}</h1>
+      {meta.type === 'event' && <div>{displayYear(meta.date_start)}</div>}
+      <hr/>
       <div dangerouslySetInnerHTML={{__html: content}}/>
       <hr/>
-      {renderSubEntities(meta.persons, 'Личности')}
-      {renderSubEntities(meta.events, 'События')}
+      {meta.type === 'era' || meta.type === 'event' && renderSubEntities(meta.persons, 'Личности')}
+      {meta.type === 'era' && renderSubEntities(meta.events, 'События')}
     </>
   );
 }
 
 export default PostPage;
 
-const contentDir = './apps/jewishhistory.info/pages/content';
-
 export async function getStaticProps({ params }) {
-  const doc = getDocByFileName(params.slug);
-
-  return {
-    props: { content: doc.content, meta: doc.meta }
-  };
+  try {
+    const doc = getDocByFileName(params.slug);
+    return {
+      props: { content: doc.content, meta: doc.meta }
+    };
+  } catch {
+    return {
+      props: { content: '', meta: {} },
+    };
+  }
 }
 
 export async function getStaticPaths() {
-  const files = fs.readdirSync(contentDir)
-    .filter((f) => f.match(/.md$/));
+  try {
+    const files = getAllDocs();
 
-  return {
-    paths: files.map(file => {
-      return {
-        params: {
-          slug: file.replace('.md', '')
+    return {
+      paths: files.map(file => {
+        return {
+          params: {
+            slug: file.replace('.md', '')
+          }
         }
-      }
-    }),
-    fallback: false
+      }),
+      fallback: false
+    }
+  } catch {
+    return { paths: [], fallback: false };
   }
-}
-
-function getDocByFileName(filename) {
-  const realSlug = filename.replace(/\.md$/, '');
-  const fullPath = path.join(contentDir, `${realSlug}.md`);
-  const metaPath = path.join(contentDir, `${realSlug}.json`);
-  const content = fs.readFileSync(fullPath, 'utf8');
-  const meta = JSON.parse(fs.readFileSync(metaPath, { encoding: 'utf8' }));
-
-  if (meta.persons) {
-    meta.persons = meta.persons.map(p => JSON.parse(fs.readFileSync(path.join(contentDir, `${p}.json`), { encoding: 'utf8' })));
-  }
-
-  if (meta.events) {
-    meta.events = meta.events.map(p => JSON.parse(fs.readFileSync(path.join(contentDir, `${p}.json`), { encoding: 'utf8' })));
-  }
-
-  return { slug: realSlug, meta, content: markdownIt().renderInline(content) }
-
 }

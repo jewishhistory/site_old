@@ -1,8 +1,10 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import * as fs from 'fs';
+import { Timeline } from 'types/Timeline';
+import { displayYear } from '../utils/dates';
 
-export const Index: FC<{ timeline: any }> = ({ timeline }) => {
+export const Index: FC<{ timeline: Timeline }> = ({ timeline }) => {
   return (
     <div>
       <h1>Jewish history site</h1>
@@ -14,7 +16,7 @@ export const Index: FC<{ timeline: any }> = ({ timeline }) => {
             <div>События:</div>
             <ul>
               {era.events.map(event => (
-                <li key={event.code}><Link href={`/content/${event.code}/`}><a>{event.name}</a></Link></li>
+                <li key={event.code}><Link href={`/content/${event.code}/`}><a>{event.name}</a></Link> ({displayYear(event.dateStart)})</li>
               ))}
             </ul>
             <div>Люди:</div>
