@@ -1,29 +1,7 @@
 import * as YAML from 'yaml';
+import { Entity } from '../../../../types/entities';
 
-interface IPerson {
-  type: 'person';
-  name: string;
-  code: string;
-  era: string;
-}
-
-interface IEra {
-  type: 'era';
-  code: string;
-  name: string;
-}
-
-interface IEvent {
-  type: 'event';
-  name: string;
-  code: string;
-  era: string;
-  persons: string[];
-}
-
-type Entity = IPerson | IEra | IEvent;
-
-export function parse(filename: string, content: string): Entity {
+export function parser(filename: string, content: string): Entity {
   const [matched] = content.match(/---\n([.\S\s]+)---/g);
   const frontmatter = matched.replace(/-{3}/g, '');
   const entity = YAML.parse(frontmatter);

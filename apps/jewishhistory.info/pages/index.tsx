@@ -8,18 +8,18 @@ export const Index: FC<{ timeline: any }> = ({ timeline }) => {
       <h1>Jewish history site</h1>
       <hr/>
       <ul>
-        {Object.keys(timeline).map((era) => (
-          <li key={era}>
-            <div><strong><Link href={`/content/${era}/`}><a>{timeline[era].name}</a></Link></strong></div>
+        {timeline.map((era) => (
+          <li key={era.code}>
+            <div><strong><Link href={`/content/${era.code}/`}><a>{era.name}</a></Link></strong></div>
             <div>События:</div>
             <ul>
-              {timeline[era].events.map(event => (
+              {era.events.map(event => (
                 <li key={event.code}><Link href={`/content/${event.code}/`}><a>{event.name}</a></Link></li>
               ))}
             </ul>
             <div>Люди:</div>
             <ul>
-              {timeline[era].persons.map(person => (
+              {era.persons.map(person => (
                 <li key={person.code}><Link href={`/content/${person.code}/`}><a>{person.name}</a></Link></li>
               ))}
             </ul>

@@ -17,7 +17,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "types/*": ["./types/*"]
+    }
   },
   "exclude": [
     "node_modules",
