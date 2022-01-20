@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Entity } from 'types/entities';
 import { getAllDocs, getDocByFileName } from '../../utils/docs';
 import { displayYear } from '../../utils/dates';
+import { Tooltip } from '@ifelseapps/lego/dist/components/Tooltip';
 
 const PostPage: FC<{ content: string, meta: Entity }> = ({ content, meta }) => {
   const renderSubEntities = (entities, title) => {
@@ -27,7 +28,8 @@ const PostPage: FC<{ content: string, meta: Entity }> = ({ content, meta }) => {
   return (
     <>
       <h1>{meta.name}</h1>
-      {meta.type === 'event' && <div>{displayYear(meta.date_start)}</div>}
+      {meta.type === 'event'
+        && <div>{meta.date_start_non_strict ? <Tooltip render={() => <div>Точная дата неизвестна</div>}>!!!</Tooltip> : displayYear(meta.date_start)}</div>}
       <hr/>
       <div dangerouslySetInnerHTML={{__html: content}}/>
       <hr/>

@@ -2,6 +2,7 @@ export interface ITimelineEvent {
   name: string;
   code: string;
   dateStart: number;
+  dateStartNonStrict: boolean;
 }
 
 export interface ITimelinePerson {

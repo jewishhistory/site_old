@@ -31,7 +31,7 @@ export class EntitiesTimeline {
     const eventFields = event.getData();
     const era = timeline.find(e => e.code === eventFields.era);
     if (era) {
-      era.events.push({ code: eventFields.code, name: eventFields.name, dateStart: eventFields.date_start });
+      era.events.push({ code: eventFields.code, name: eventFields.name, dateStart: eventFields.date_start, dateStartNonStrict: eventFields.date_start_non_strict });
       // Отсортируем события в порядке возрастания
       era.events.sort((src, dest) => src.dateStart - dest.dateStart);
       // Отсортируем эпохи в порядке возрастания по первому событию в эпохе

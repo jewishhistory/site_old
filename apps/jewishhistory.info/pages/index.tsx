@@ -3,6 +3,7 @@ import Link from 'next/link';
 import * as fs from 'fs';
 import { Timeline } from 'types/Timeline';
 import { displayYear } from '../utils/dates';
+import { Tooltip } from '@ifelseapps/lego/dist/components/Tooltip';
 
 export const Index: FC<{ timeline: Timeline }> = ({ timeline }) => {
   return (
@@ -16,7 +17,13 @@ export const Index: FC<{ timeline: Timeline }> = ({ timeline }) => {
             <div>События:</div>
             <ul>
               {era.events.map(event => (
-                <li key={event.code}><Link href={`/content/${event.code}/`}><a>{event.name}</a></Link> ({displayYear(event.dateStart)})</li>
+                <li key={event.code}>
+                  <Link href={`/content/${event.code}/`}><a>{event.name}</a></Link>
+                  {' '}
+                  {event.dateStartNonStrict
+                    ? <Tooltip render={() => <div>!!! Точная дата неизвестна</div>}>!!!</Tooltip>
+                    : displayYear(event.dateStart)}
+                </li>
               ))}
             </ul>
             <div>Люди:</div>

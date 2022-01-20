@@ -20,6 +20,7 @@ export interface IEventEntity extends IBaseEntity {
   era: string;
   persons: string[];
   date_start: number;
+  date_start_non_strict?: boolean;
 }
 
 export type Entity = IEraEntity | IPersonEntity | IEventEntity;
