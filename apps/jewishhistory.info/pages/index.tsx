@@ -4,8 +4,10 @@ import * as fs from 'fs';
 import { Timeline } from 'types/Timeline';
 import { displayYear } from '../utils/dates';
 import { Tooltip } from '@ifelseapps/lego/dist/components/Tooltip';
+import calendar from './calendar.svg';
 
 export const Index: FC<{ timeline: Timeline }> = ({ timeline }) => {
+
   return (
     <div>
       <h1>Jewish history site</h1>
@@ -21,7 +23,7 @@ export const Index: FC<{ timeline: Timeline }> = ({ timeline }) => {
                   <Link href={`/content/${event.code}/`}><a>{event.name}</a></Link>
                   {' '}
                   {event.dateStartNonStrict
-                    ? <Tooltip render={() => <div>!!! Точная дата неизвестна</div>}>!!!</Tooltip>
+                    ? <Tooltip render={() => <div><img src={calendar.src} width={16} height={16} /> Точная дата неизвестна</div>}><img width={16} height={16} src={calendar.src} /></Tooltip>
                     : displayYear(event.dateStart)}
                 </li>
               ))}
