@@ -1,0 +1,17 @@
+html {
+  font-family: 'PT Sans', sans-serif;
+}
+
+a {
+  color: #0D47A1;
+  text-decoration: underline;
+  text-decoration-color: #0D47A1;
+  text-decoration-thickness: .05em;
+  text-underline-offset: 0.2em;
+  transition: color 0.3s, text-decoration-color 0.3s;
+}
+
+a:hover {
+  color: #D84315;
+  text-decoration-color: #D84315;
+}
