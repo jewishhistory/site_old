@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run content:run && nx serve",
+    "serve": "nx serve",
     "build": "npm run content:run && nx build && nx export",
     "test": "nx test",
     "content:build": "webpack --config ./tools/executors/content/webpack.config.cjs",
