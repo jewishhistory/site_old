@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  border-left: solid 4px #BDBDBD;
 }
 
 .item {
@@ -10,13 +9,13 @@
 }
 
 .itemTitle {
-  padding: 0 1em;
 }
 
 .events {
   margin: 0;
   padding: 0;
   list-style: none;
+  border-left: solid 4px #BDBDBD;
 }
 
 .event {
@@ -66,7 +65,7 @@
 .persons {
   display: inline-flex;
   flex-direction: column;
-  margin: 1em;
+  margin: 1em 0;
   padding: 1em;
   list-style: none;
   background: #E3F2FD;
